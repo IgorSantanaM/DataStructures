@@ -18,4 +18,23 @@ tree.TranversePreOrder(tree.Root);
 Console.WriteLine("PostOrder\n");
 tree.TransversePostOrder(tree.Root);
 
+var height = tree.Height(tree.Root);
+
+Console.WriteLine($"Height: {height}");
+
+var minimum = tree.MinimumValue(tree.Root);
+
+Console.WriteLine($"Minimum: {minimum}");
+
 Console.WriteLine("Binary Tree Example");
+
+Tree tree2 = new Tree();
+tree2.Insert(7);
+tree2.Insert(4);
+tree2.Insert(9);
+tree2.Insert(1);
+tree2.Insert(6);
+tree2.Insert(8);
+tree2.Insert(10);
+
+Console.WriteLine(tree.Equals(tree2));
