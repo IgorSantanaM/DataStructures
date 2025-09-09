@@ -162,4 +162,81 @@
         return false;
     }
 
+    public bool IsBinarySearchTree()
+    {
+        return IsBinarySearchTree(Root, int.MinValue, int.MaxValue);
+    }
+    private bool IsBinarySearchTree(Node node, int min, int max)
+    {
+        if (node is null)
+            return true;
+        if (node.Value < min || node.Value > max)
+            return false;
+        return IsBinarySearchTree(node.Left, min, node.Value - 1)
+            && IsBinarySearchTree(node.Right, node.Value + 1, max);
+    }   
+
+    public List<int> GetNodesAtDistance(int distance)
+    {
+        var list = new List<int>();
+        GetNodesAtDistance(Root, distance, list);
+        return list;
+    }
+
+    private void GetNodesAtDistance(Node node, int distance, List<int> list)
+    {
+        if (node is null)
+            return;
+
+        if (distance == 0)
+        {
+            list.Add(node.Value);
+            return;
+        }
+
+        GetNodesAtDistance(node.Left, distance - 1, list);
+        GetNodesAtDistance(node.Right, distance - 1, list);
+    }
+
+    public void TraverseLevelOrder()
+    {
+        // O(n^2) time complexity
+        for (int i = 0; i <= Height(Root); i++)
+        {
+            foreach (var item in GetNodesAtDistance(i))
+                Console.WriteLine(item);
+        }
+    }
+
+    public int CountLeaves()
+    {
+        return CountLeaves(Root);
+    }
+
+    private int CountLeaves(Node node)
+    {
+        if(node is null)
+            return 0;
+
+        if (IsLeaf(node))
+            return 1;
+
+        return CountLeaves(node.Left) + CountLeaves(node.Right);
+    }
+
+    public bool Contains(int value)
+    {
+        return Contains(Root, value);
+    }
+
+    private bool Contains(Node node, int value)
+    {
+        if (node is null)
+            return false;
+
+        if (node.Value == value)
+            return true;
+
+        return Contains(node.Left, value) || Contains(node.Right, value);
+    }
 }

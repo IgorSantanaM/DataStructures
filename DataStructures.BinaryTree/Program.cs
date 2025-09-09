@@ -38,3 +38,14 @@ tree2.Insert(8);
 tree2.Insert(10);
 
 Console.WriteLine(tree.Equals(tree2));
+
+Console.WriteLine(tree.IsBinarySearchTree());
+
+var nodesAtDistance = tree.GetNodesAtDistance(2);   
+foreach(var node in nodesAtDistance)
+    Console.WriteLine(node);
+
+Console.WriteLine($"Number of leafs: {tree.CountLeaves()}");
+
+int n = 4;
+Console.WriteLine($"Contains {n}: {tree.Contains(n)}");
