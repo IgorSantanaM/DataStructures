@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AVLTree", "AVLTree", "{02EA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructures.AVLTree", "DataStructures.AVLTree\DataStructures.AVLTree.csproj", "{E4BB9882-2DBC-43A9-9DFA-C810DFD99ADA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Heap", "Heap", "{DF75C902-26C5-47C4-91A9-B3F9AC7C39EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructures.Heap", "DataStructures.Heap\DataStructures.Heap.csproj", "{2DAD0946-964E-483F-B880-1537BFD25201}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,10 @@ Global
 		{E4BB9882-2DBC-43A9-9DFA-C810DFD99ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4BB9882-2DBC-43A9-9DFA-C810DFD99ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4BB9882-2DBC-43A9-9DFA-C810DFD99ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DAD0946-964E-483F-B880-1537BFD25201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DAD0946-964E-483F-B880-1537BFD25201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DAD0946-964E-483F-B880-1537BFD25201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DAD0946-964E-483F-B880-1537BFD25201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{70FB7B06-8F28-4656-B7AD-94BCF9781DF3} = {BB36395C-E6D6-496A-AE35-51F36DFB2C7E}
 		{E4BB9882-2DBC-43A9-9DFA-C810DFD99ADA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2DAD0946-964E-483F-B880-1537BFD25201} = {DF75C902-26C5-47C4-91A9-B3F9AC7C39EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {814F524F-9762-4173-8943-2D312EFEDD41}
