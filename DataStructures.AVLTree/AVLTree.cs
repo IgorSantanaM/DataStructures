@@ -49,6 +49,7 @@ namespace DataStructures.AVLTree
             int balanceFactor = BalanceFactor(root);
 
            root = Balance(root);
+
             return root;
         }
 
