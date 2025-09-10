@@ -11,3 +11,8 @@ heap.Insert(1);
 heap.Insert(8);
 
 int[] numbers = { 5, 3, 8, 4, 1, 2 };
+MaxHeap.Heapify(numbers);
+foreach (var item in numbers)
+    Console.WriteLine(item);
+
+Console.WriteLine(MaxHeap.GetKthLargest(numbers, 4));

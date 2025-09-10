@@ -33,6 +33,13 @@ namespace DataStructures.Heap
             return root;
         }
 
+        public int Peek()
+        {
+            if (IsEmpty())
+                throw new Exception("Heap is empty");
+            return items[0];
+        }
+
         private void BubbleDown()
         {
             var index = 0;
