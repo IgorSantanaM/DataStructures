@@ -55,7 +55,7 @@
         }
 
         public int GetEdgeWeight(Node vertice)
-        => 1;
+            => 1;
 
         public void Display()
         {
@@ -64,6 +64,39 @@
                 for(int v = 0; v < GetAdjacentVertices(i).Count; v++)
                     Console.WriteLine($"{i} --> {v}");
             }
+        }
+
+        public List<int> TopologicalSort()
+        {
+            var queue = new Queue<int>();
+            var indegreeMap = new Dictionary<int, int>();
+
+            for(int i = 0; i <  NumVertices; i++)
+            {
+                indegreeMap[i] = GetIndegree(i);
+                if (indegreeMap[i] == 0)
+                    queue.Enqueue(i);
+            }
+
+            var resultList = new List<int>();
+
+            while(queue.Any())
+            {
+                var vertex = queue.Dequeue();
+
+                resultList.Add(vertex);
+
+                foreach(var vertice in GetAdjacentVertices(vertex))
+                {
+                    indegreeMap[vertice]--;
+                    if (indegreeMap[vertice] == 0)
+                        queue.Enqueue(vertice);
+                }
+            }
+            if (resultList.Count != NumVertices)
+                throw new Exception("This graph has a cycle and cannot have a topological sort");
+
+            return resultList;
         }
     }
     public class Node
