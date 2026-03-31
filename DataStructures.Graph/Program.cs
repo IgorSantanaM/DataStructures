@@ -11,7 +11,6 @@ graph.AddEdge(5, 6);
 graph.AddEdge(3, 6);
 graph.AddEdge(3, 4);
 graph.AddEdge(6, 8);
-
 var topologicalSort = graph.TopologicalSort();
 Console.WriteLine();
 

@@ -23,7 +23,7 @@
 
             if (weight != 1)
             {
-                Console.WriteLine("Adjacency set canno represent weighted graphs");
+                Console.WriteLine("Adjacency set cannot represent weighted graphs");
                 return;
             }
 
@@ -54,14 +54,14 @@
             return indegree;
         }
 
-        public int GetEdgeWeight(Node vertice)
+        public int GetEdgeWeight(int vertice)
             => 1;
 
         public void Display()
         {
-            for(int i = 0; i < NumVertices; i++)
+            for (int i = 0; i < NumVertices; i++)
             {
-                for(int v = 0; v < GetAdjacentVertices(i).Count; v++)
+                for (int v = 0; v < GetAdjacentVertices(i).Count; v++)
                     Console.WriteLine($"{i} --> {v}");
             }
         }
@@ -71,7 +71,7 @@
             var queue = new Queue<int>();
             var indegreeMap = new Dictionary<int, int>();
 
-            for(int i = 0; i <  NumVertices; i++)
+            for (int i = 0; i < NumVertices; i++)
             {
                 indegreeMap[i] = GetIndegree(i);
                 if (indegreeMap[i] == 0)
@@ -80,13 +80,13 @@
 
             var resultList = new List<int>();
 
-            while(queue.Any())
+            while (queue.Any())
             {
                 var vertex = queue.Dequeue();
 
                 resultList.Add(vertex);
 
-                foreach(var vertice in GetAdjacentVertices(vertex))
+                foreach (var vertice in GetAdjacentVertices(vertex))
                 {
                     indegreeMap[vertice]--;
                     if (indegreeMap[vertice] == 0)
@@ -97,6 +97,88 @@
                 throw new Exception("This graph has a cycle and cannot have a topological sort");
 
             return resultList;
+        }
+
+        public Stack<int> ShortestPath(int source, int destination)
+        {
+            //var distanceTableUndirectedGraph = BuildDistaceTableUndirectedGraph(source);
+            var distanceTable = BuildDistanceTableDijikstra(source);
+            if (!distanceTable.ContainsKey(destination))
+                throw new InvalidOperationException();
+
+            var path = new Stack<int>();
+
+            int currentVertex = destination;
+            while (currentVertex != source)
+            {
+                path.Push(currentVertex);
+
+                currentVertex = distanceTable[currentVertex].previousVertex;
+            }
+
+            path.Push(source);
+
+            return path;
+        }
+
+        private Dictionary<int, (int distance, int previousVertex)> BuildDistanceTableDijikstra(int source)
+        {
+            var distanceTable = new Dictionary<int, (int distance, int previousVertex)>();
+
+            distanceTable[source] = (0, source);
+
+            var minHeap = new GraphPriorityQueue();
+
+            minHeap.Insert(0);
+
+            while (minHeap.Size > 0)
+            {
+                var currentVertex = minHeap.Remove();
+
+                var currentDistance = distanceTable[currentVertex].distance;
+
+                foreach (var vertice in GetAdjacentVertices(currentVertex))
+                {
+                    int distance = currentDistance + GetEdgeWeight(currentVertex); // fix to get the edge between the vertex and a neighbour
+
+                    if (!distanceTable.ContainsKey(vertice) || distanceTable[vertice].distance > distance)
+                    {
+                        distanceTable[vertice] = (distance, currentVertex);
+                        minHeap.Insert(vertice);
+                    }
+                }
+            }
+            return distanceTable;
+        }
+
+        private Dictionary<int, (int distance, int previousVertex)> BuildDistaceTableUndirectedGraph(int source)
+        {
+            var distanceTable = new Dictionary<int, (int distance, int previousVertex)>();
+
+            distanceTable[source] = (0, source);
+
+            var queue = new Queue<int>();
+            queue.Enqueue(source);
+
+            while (queue.Any())
+            {
+                var currentVertex = queue.Dequeue();
+
+                var currentDistance = distanceTable[currentVertex].distance;
+
+                foreach (var vertice in GetAdjacentVertices(currentVertex))
+                {
+                    if (!distanceTable.ContainsKey(vertice))
+                    {
+                        var newDistance = 1 + currentDistance;
+
+                        distanceTable[vertice] = (newDistance, currentVertex);
+                        if (GetAdjacentVertices(vertice).Count > 0)
+                            queue.Enqueue(vertice);
+                    }
+                }
+            }
+            return distanceTable;
         }
     }
     public class Node
