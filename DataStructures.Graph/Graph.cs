@@ -103,6 +103,7 @@
         {
             //var distanceTableUndirectedGraph = BuildDistaceTableUndirectedGraph(source);
             var distanceTable = BuildDistanceTableDijikstra(source);
+
             if (!distanceTable.ContainsKey(destination))
                 throw new InvalidOperationException();
 
