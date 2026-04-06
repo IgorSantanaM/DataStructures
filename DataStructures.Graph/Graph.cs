@@ -130,27 +130,33 @@
 
             var minHeap = new GraphPriorityQueue();
 
-            minHeap.Insert(0);
+            minHeap.Insert(source, 0);
 
             while (minHeap.Size > 0)
             {
-                var currentVertex = minHeap.Remove();
+                var current = minHeap.Remove();
 
-                var currentDistance = distanceTable[currentVertex].distance;
+                var currentVertex = current.Vertex;
+                var currentDistance = current.Distance;
+
+                if (currentDistance > distanceTable[currentVertex].distance)
+                    continue;
 
                 foreach (var vertice in GetAdjacentVertices(currentVertex))
                 {
-                    int distance = currentDistance + GetEdgeWeight(currentVertex); // fix to get the edge between the vertex and a neighbour
+                    int distance = currentDistance + GetEdgeWeight(currentVertex); 
 
                     if (!distanceTable.ContainsKey(vertice) || distanceTable[vertice].distance > distance)
                     {
                         distanceTable[vertice] = (distance, currentVertex);
-                        minHeap.Insert(vertice);
+                        minHeap.Insert(vertice, distance);
                     }
                 }
             }
             return distanceTable;
         }
+
+        [Obsolete]
 
         private Dictionary<int, (int distance, int previousVertex)> BuildDistaceTableUndirectedGraph(int source)
         {
