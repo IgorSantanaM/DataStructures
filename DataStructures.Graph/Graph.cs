@@ -122,6 +122,53 @@
             return path;
         }
 
+        public HashSet<string> SpanningTree(int source)
+        {
+            var distanceTable = new Dictionary<int, (int distance, int previousVertex)>();
+
+            distanceTable[source] = (0, source);
+
+            var priorityQueue = new GraphPriorityQueue();
+
+            priorityQueue.Insert(source, 0);
+
+            var visitedVertices = new HashSet<int>();
+
+            var spanningTree = new HashSet<string>();
+
+            while (priorityQueue.Size > 0)
+            {
+                var current = priorityQueue.Remove();
+
+                var currentVertex = current.Vertex;
+                if (visitedVertices.Contains(currentVertex))
+                    continue;
+
+                visitedVertices.Add(currentVertex);
+
+                if (currentVertex != source)
+                {
+                    int lastVertex = distanceTable[currentVertex].previousVertex;
+                    string edge = lastVertex + "->" + currentVertex;
+                    spanningTree.Add(edge);
+                }
+
+                foreach(var neighbor in GetAdjacentVertices(currentVertex))
+                {
+                    var distance = GetEdgeWeight(currentVertex);
+
+                    if (!distanceTable.ContainsKey(neighbor) || distanceTable[neighbor].distance > distance)
+                    {
+                        distanceTable[neighbor] = (distance, currentVertex);
+                        priorityQueue.Insert(neighbor, distance);
+                    }
+
+                }
+            }
+
+            return spanningTree;
+        }
+
         private Dictionary<int, (int distance, int previousVertex)> BuildDistanceTableDijikstra(int source)
         {
             var distanceTable = new Dictionary<int, (int distance, int previousVertex)>();
@@ -144,7 +191,7 @@
 
                 foreach (var vertice in GetAdjacentVertices(currentVertex))
                 {
-                    int distance = currentDistance + GetEdgeWeight(currentVertex); 
+                    int distance = currentDistance + GetEdgeWeight(currentVertex);
 
                     if (!distanceTable.ContainsKey(vertice) || distanceTable[vertice].distance > distance)
                     {
