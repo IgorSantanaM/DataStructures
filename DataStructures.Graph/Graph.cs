@@ -122,6 +122,80 @@
             return path;
         }
 
+        private Dictionary<int, HashSet<(int, int)>> MimimumSpanningTreeKruskal()
+        {
+            var minHeap = new GraphPriorityQueue();
+
+            for(int i = 0; i < NumVertices; i++)
+            {
+                foreach(var vertice in GetAdjacentVertices(i))
+                    minHeap.Insert(vertice, GetEdgeWeight(vertice));
+            }
+            var visitedVertices = new HashSet<int>();
+
+            var spanningTree = new Dictionary<int, HashSet<(int, int)>>();
+
+            var numEdges = 0;
+
+            while(minHeap.Size > 0 && numEdges < NumVertices - 1)
+            {
+                var current = minHeap.Remove();
+
+                var currentVertex = current.Vertex;
+
+                if (spanningTree.ContainsKey(currentVertex))
+                    continue;
+                spanningTree[currentVertex].Add((currentVertex, current.Distance));
+
+                visitedVertices.Add(currentVertex);
+            }
+
+            return spanningTree;
+        }
+
+        private HashSet<string> MinimumSpanningTreePrim(int source)
+        {
+            var distanceTable = new Dictionary<int, (int distance, int previousVertex)>();
+
+            distanceTable[source] = (0, source);
+
+            var minHeap = new GraphPriorityQueue();
+            var visitedVertices = new HashSet<int>();
+            var spanningTree = new HashSet<string>();
+
+            minHeap.Insert(source, 0);
+
+            while(minHeap.Size > 0)
+            {
+                var current = minHeap.Remove();
+
+                var currentVertex = current.Vertex;
+
+                if (visitedVertices.Contains(currentVertex))
+                    continue;
+
+                visitedVertices.Add(currentVertex);
+
+                if(currentVertex != source)
+                {
+                    var lastVertex = distanceTable[currentVertex].previousVertex;
+                    var edge = lastVertex + "->" + currentVertex;
+                    spanningTree.Add(edge);
+                }
+
+                foreach(var vertice in GetAdjacentVertices(source))
+                {
+                    var distance = GetEdgeWeight(vertice);
+                    if (!distanceTable.ContainsKey(vertice) || distanceTable[vertice].distance > distance)
+                    {
+                        distanceTable[vertice] = (distance, currentVertex);
+                        minHeap.Insert(vertice, distance);
+                    }
+                }
+            }
+            return spanningTree;
+        }
+
         private Dictionary<int, (int distance, int previousVertex)> BuildDistanceTableDijikstra(int source)
         {
             var distanceTable = new Dictionary<int, (int distance, int previousVertex)>();
